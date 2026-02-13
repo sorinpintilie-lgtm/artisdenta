@@ -1,0 +1,1102 @@
+<!DOCTYPE html>
+<html lang="ro" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Artis Denta | Clinică Stomatologică Sector 4</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            50: '#f0f9ff', 100: '#e0f2fe', 500: '#0ea5e9', 600: '#0284c7', 900: '#0c4a6e',
+                        }
+                    },
+                    animation: {
+                        'float': 'float 20s infinite alternate',
+                        'fade-in-up': 'fadeInUp 0.5s ease-out forwards',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%': { transform: 'translate(0, 0) rotate(0deg)' },
+                            '100%': { transform: 'translate(20px, 20px) rotate(10deg)' },
+                        },
+                        fadeInUp: {
+                            '0%': { opacity: '0', transform: 'translateY(20px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        :root {
+            --promo-height: 40px;
+        }
+        
+        body { 
+            background-color: #F8FAFC; 
+            color: #334155; 
+            overflow-x: hidden; 
+            padding-top: calc(var(--promo-height) + env(safe-area-inset-top));
+        }
+        
+        /* Glassmorphism */
+        .glass {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.8);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.03);
+        }
+
+        /* Utils */
+        .hide-scrollbar::-webkit-scrollbar { display: none; }
+        .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+        .custom-scroll::-webkit-scrollbar { width: 6px; }
+        .custom-scroll::-webkit-scrollbar-track { background: transparent; }
+        .custom-scroll::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
+
+        /* Flip Card */
+        .flip-perspective { perspective: 1200px; }
+        .flip-inner { position: relative; width: 100%; height: 100%; transform-style: preserve-3d; transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+        .is-flipped .flip-inner { transform: rotateY(180deg); }
+        .flip-face { position: absolute; inset: 0; backface-visibility: hidden; -webkit-backface-visibility: hidden; }
+        .flip-back { transform: rotateY(180deg); }
+
+        /* Dark Mode Input Fix */
+        input:-webkit-autofill, textarea:-webkit-autofill {
+            -webkit-box-shadow: 0 0 0px 1000px #1e293b inset;
+            -webkit-text-fill-color: white;
+            transition: background-color 5000s ease-in-out 0s;
+        }
+
+        /* Promo Bar */
+        .promo-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: var(--promo-height);
+            background: #F2B94B;
+            color: #1F2933;
+            font-weight: 400;
+            z-index: 9999;
+            padding-top: env(safe-area-inset-top);
+            border-bottom: 1px solid rgba(0,0,0,0.1);
+            font-size: 14px;
+            line-height: 1.2;
+        }
+
+        .promo-desktop {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 100%;
+            max-width: min(1240px, 92vw);
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .promo-desktop span {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .promo-desktop span a {
+            color: #2F80ED;
+            text-decoration: none;
+        }
+
+        .promo-desktop span a:hover {
+            text-decoration: underline;
+        }
+
+        .btn-promo {
+            background: #2F80ED;
+            color: white;
+            padding: 6px 14px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 400;
+            font-size: 14px;
+            transition: opacity 0.2s;
+            white-space: nowrap;
+        }
+
+        .btn-promo:hover,
+        .btn-promo:focus {
+            opacity: 0.85;
+        }
+
+        .promo-mobile {
+            display: none;
+            height: 100%;
+            padding: 0 12px;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .promo-mobile .promo-left,
+        .promo-mobile .promo-center,
+        .promo-mobile .promo-right {
+            display: flex;
+            align-items: center;
+            font-size: 12px;
+            color: #1F2933;
+            white-space: nowrap;
+        }
+
+        .promo-mobile .promo-left {
+            flex-shrink: 1;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            min-width: 0;
+        }
+
+        .promo-mobile .promo-center {
+            flex-shrink: 0;
+            text-align: center;
+            padding: 0 8px;
+        }
+
+        .promo-mobile .promo-right {
+            flex-shrink: 0;
+        }
+
+        .promo-mobile .promo-right a {
+            color: #2F80ED;
+            text-decoration: none;
+        }
+
+        .promo-mobile .promo-right a:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 768px) {
+            .promo-desktop {
+                display: none;
+            }
+            .promo-mobile {
+                display: flex;
+            }
+        }
+    </style>
+</head>
+<body class="antialiased selection:bg-blue-200 selection:text-blue-900">
+
+    <!-- Promo Bar -->
+    <div class="promo-bar">
+        <div class="promo-desktop">
+            <span>Concept demo • Conținut orientativ • Dezvoltat de sky.ro • <a href="mailto:dan.trifan@sky.ro">dan.trifan@sky.ro</a> • <a href="tel:+40720088880">+4 0720 088 880</a></span>
+            <a class="btn btn-promo" href="https://wa.me/40720088880">WhatsApp</a>
+        </div>
+        <div class="promo-mobile">
+            <div class="promo-left">Concept demo</div>
+            <div class="promo-center">Dezvoltat de sky.ro</div>
+            <div class="promo-right"><a href="tel:+40720088880">+4 0720 088 880</a></div>
+        </div>
+    </div>
+
+    <div class="fixed top-0 left-0 w-full h-full -z-10 overflow-hidden pointer-events-none">
+        <div class="absolute top-[-10%] left-[-10%] w-[500px] h-[500px] rounded-full bg-blue-100 blur-[80px] opacity-60 animate-float"></div>
+        <div class="absolute bottom-[-10%] right-[-10%] w-[600px] h-[600px] rounded-full bg-teal-100 blur-[80px] opacity-60 animate-float" style="animation-delay: -5s;"></div>
+    </div>
+
+    <nav class="sticky z-40 glass border-b border-white/50" style="top: calc(var(--promo-height) + env(safe-area-inset-top));">
+        <div class="max-w-7xl mx-auto px-6 h-20 flex justify-between items-center">
+            <a href="#" class="flex items-center gap-2 group">
+                <img src="logo.png" alt="Artis Denta Logo" class="h-10 w-auto">
+            </a>
+
+            <div class="hidden lg:flex items-center gap-8 font-semibold text-sm text-slate-500">
+                <a href="#acasa" class="text-blue-600">Acasă</a>
+                <a href="#servicii" class="hover:text-blue-600 transition">Servicii</a>
+                <a href="#tehnologie" class="hover:text-blue-600 transition">Tehnologie</a>
+                <a href="#echipa" class="hover:text-blue-600 transition">Echipa</a>
+                <a href="#contact" class="hover:text-blue-600 transition">Contact</a>
+            </div>
+
+            <div class="flex items-center gap-4">
+                <button onclick="document.getElementById('contact').scrollIntoView()" class="hidden md:block bg-slate-900 hover:bg-slate-800 text-white px-6 py-2.5 rounded-full font-bold text-sm shadow-lg shadow-slate-900/20 transition hover:-translate-y-0.5">
+                    Programare
+                </button>
+                <button onclick="toggleMobileMenu()" class="lg:hidden w-10 h-10 bg-slate-100 rounded-full flex items-center justify-center text-slate-600 z-50 relative">
+                    <i class="fa-solid fa-bars text-lg" id="menuIcon"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <div id="mobile-menu" class="fixed inset-0 z-40 bg-white transform translate-x-full transition-transform duration-300 flex flex-col justify-center items-center gap-8 text-xl font-bold text-slate-800 lg:hidden">
+        <a href="#acasa" onclick="toggleMobileMenu()">Acasă</a>
+        <a href="#servicii" onclick="toggleMobileMenu()">Servicii</a>
+        <a href="#tehnologie" onclick="toggleMobileMenu()">Tehnologie</a>
+        <a href="#echipa" onclick="toggleMobileMenu()">Echipa</a>
+        <a href="#contact" onclick="toggleMobileMenu()">Contact</a>
+        <button onclick="toggleMobileMenu(); document.getElementById('contact').scrollIntoView()" class="bg-blue-600 text-white px-8 py-3 rounded-full mt-4">Programează-te</button>
+    </div>
+
+    <section id="acasa" class="pt-12 pb-16 lg:pt-32 lg:pb-24 px-6 relative overflow-hidden">
+        <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+            
+            <div class="relative z-10 order-1 lg:order-1 text-center lg:text-left">
+                <h1 class="text-5xl lg:text-7xl font-extrabold text-slate-900 leading-[1.1] mb-8 tracking-tight">
+                    Zâmbetul tău, <br>
+                    <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 via-teal-500 to-blue-600 animate-pulse">arta noastră.</span>
+                </h1>
+
+                <p class="hidden md:block text-lg text-slate-600 mb-8 max-w-lg leading-relaxed">
+                    Stomatologie digitală în Sectorul 4. Îmbinăm tehnologia de ultimă generație cu empatia, pentru tratamente sigure și fără durere.
+                </p>
+                
+                <div class="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
+                    <button onclick="document.getElementById('services-grid').scrollIntoView()" class="bg-slate-900 text-white px-8 py-4 rounded-2xl font-bold shadow-xl shadow-slate-900/20 hover:bg-slate-800 hover:-translate-y-1 transition duration-300">
+                        Vezi Serviciile
+                    </button>
+                    <button onclick="togglePricingModal()" class="glass text-slate-700 px-8 py-4 rounded-2xl font-bold hover:bg-white/90 transition flex items-center justify-center gap-2 group border-slate-200">
+                        <i class="fa-solid fa-tag text-blue-500 group-hover:rotate-12 transition"></i> Lista de Prețuri
+                    </button>
+                </div>
+
+                <div class="block lg:hidden mt-10">
+                    <div class="glass p-2 rounded-[2rem] shadow-xl rotate-1">
+                        <img src="hero.jpg" class="rounded-[1.5rem] w-full h-[280px] object-cover">
+                    </div>
+                </div>
+            </div>
+
+            <div class="relative order-2 lg:order-2 hidden lg:block">
+                <div class="absolute inset-0 bg-gradient-to-tr from-blue-200 to-teal-200 rounded-[3rem] rotate-6 opacity-40 blur-2xl"></div>
+                <div class="glass p-3 rounded-[2.5rem] relative transform hover:rotate-1 transition duration-700 shadow-2xl">
+                    <img src="hero.jpg" alt="Cabinet stomatologic modern" class="rounded-[2rem] w-full h-auto object-cover">
+                    
+                    <div class="absolute -bottom-6 -left-6 glass bg-slate-900 text-white p-5 rounded-2xl shadow-xl flex items-center gap-4 animate-bounce" style="animation-duration: 4s;">
+                        <div class="bg-yellow-500/20 p-3 rounded-full text-yellow-400 text-xl">
+                            <i class="fa-solid fa-star"></i>
+                        </div>
+                        <div>
+                            <p class="font-bold text-lg leading-none">4.9 / 5.0</p>
+                            <p class="text-xs text-slate-400 font-medium mt-1">Recenzii Google</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div id="stats-section" class="border-y border-slate-200 bg-white/50 backdrop-blur-sm py-12">
+        <div class="max-w-7xl mx-auto px-6 grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+            <div class="group cursor-default">
+                <div class="text-4xl font-extrabold text-slate-900 mb-1 group-hover:text-blue-600 transition flex justify-center">
+                    <span class="count-up" data-target="10">0</span>+
+                </div>
+                <div class="text-[10px] font-bold uppercase text-slate-400 tracking-widest">Ani Experiență</div>
+            </div>
+            <div class="group cursor-default">
+                <div class="text-4xl font-extrabold text-slate-900 mb-1 group-hover:text-blue-600 transition flex justify-center">
+                    <span class="count-up" data-target="5000">0</span>+
+                </div>
+                <div class="text-[10px] font-bold uppercase text-slate-400 tracking-widest">Pacienți</div>
+            </div>
+            <div class="group cursor-default">
+                <div class="text-4xl font-extrabold text-slate-900 mb-1 group-hover:text-blue-600 transition flex justify-center">
+                    <span class="count-up" data-target="100">0</span>%
+                </div>
+                <div class="text-[10px] font-bold uppercase text-slate-400 tracking-widest">Digital Flow</div>
+            </div>
+            <div class="group cursor-default">
+                <div class="text-4xl font-extrabold text-slate-900 mb-1 group-hover:text-blue-600 transition flex justify-center">
+                    <span class="count-up" data-target="24">0</span>h
+                </div>
+                <div class="text-[10px] font-bold uppercase text-slate-400 tracking-widest">Urgențe</div>
+            </div>
+        </div>
+    </div>
+
+    <section id="servicii" class="py-24 relative z-10">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center mb-10 md:mb-16">
+                <span class="text-blue-600 font-extrabold text-xs uppercase tracking-[0.2em]">Servicii Premium</span>
+                <h2 class="text-3xl md:text-5xl font-bold text-slate-900 mt-3">Soluții Complete</h2>
+            </div>
+
+            <div id="services-grid" class="flex md:grid md:grid-cols-4 gap-6 overflow-x-auto md:overflow-visible snap-x snap-mandatory scroll-smooth pb-8 -mx-6 px-6 md:mx-0 md:px-0 hide-scrollbar">
+                
+                <div class="snap-center shrink-0 w-full md:w-auto min-h-[320px] md:min-h-0 md:h-auto md:col-span-2 md:row-span-2 
+                            bg-white md:bg-blue-600 rounded-[2.5rem] p-6 md:p-12 
+                            border border-slate-100 md:border-transparent
+                            flex flex-col justify-between group transition duration-500 relative overflow-hidden">
+                    
+                    <!-- Background image only on desktop -->
+                    <div class="hidden md:block absolute inset-0 z-0">
+                        <img src="implant.jpg" class="w-full h-full object-cover object-bottom opacity-90" alt="">
+                        <div class="absolute inset-0 bg-blue-600/60"></div>
+                    </div>
+                    
+                    <div class="relative z-10">
+                        <div class="w-12 h-12 md:w-16 md:h-16 bg-blue-50 md:bg-white/10 text-blue-600 md:text-white rounded-2xl flex items-center justify-center text-xl md:text-2xl mb-6 shadow-sm md:shadow-lg transition">
+                            <i class="fa-solid fa-tooth"></i>
+                        </div>
+                        
+                        <h3 class="text-2xl md:text-3xl font-bold text-slate-900 md:text-white mb-4">Implantologie Digitală</h3>
+                        
+                        <div class="space-y-4">
+                            <p class="text-slate-500 md:text-blue-100 text-sm md:text-lg leading-relaxed">
+                                Restaurăm zâmbetul în 24h. Implanturi premium (Straumann / Megagen) planificate digital.
+                            </p>
+                            <p class="hidden md:block text-blue-100 text-sm md:text-lg leading-relaxed opacity-80">
+                                Folosim ghiduri chirurgicale 3D pentru inserarea implantului cu precizie de microni, reducând timpul de vindecare și disconfortul post-operator.
+                            </p>
+                        </div>
+                    </div>
+                    
+                    <div class="relative z-10 mt-6">
+                         <button onclick="filterPrices('Implantologie'); togglePricingModal()" class="text-blue-600 md:text-white font-bold flex items-center gap-2 hover:gap-4 transition-all">
+                            Vezi tarife <i class="fa-solid fa-arrow-right"></i>
+                        </button>
+                    </div>
+
+                    <div class="hidden md:block absolute -right-10 -bottom-10 w-64 h-64 bg-white/10 rounded-full blur-3xl"></div>
+                </div>
+
+                <div class="snap-center shrink-0 w-full md:w-auto min-h-[280px] md:min-h-0 md:h-[320px] glass bg-white/60 p-6 md:p-8 rounded-[2.5rem] border border-white/50 hover:shadow-xl transition flex flex-col justify-between">
+                    <div>
+                        <div class="w-12 h-12 bg-pink-50 text-pink-500 rounded-2xl flex items-center justify-center mb-4 md:mb-6 text-xl"><i class="fa-solid fa-gem"></i></div>
+                        <h3 class="text-xl md:text-xl font-bold text-slate-900 mb-2">Estetică</h3>
+                        <p class="text-sm text-slate-500 leading-relaxed">Fațete dentare E-MAX ultra-subțiri și albire profesională cu Laser pentru un zâmbet strălucitor de durată, perfect aliniat.</p>
+                    </div>
+                </div>
+
+                <div class="snap-center shrink-0 w-full md:w-auto min-h-[280px] md:min-h-0 md:h-[320px] glass bg-white/60 p-6 md:p-8 rounded-[2.5rem] border border-white/50 hover:shadow-xl transition flex flex-col justify-between">
+                    <div>
+                        <div class="w-12 h-12 bg-teal-50 text-teal-500 rounded-2xl flex items-center justify-center mb-4 md:mb-6 text-xl"><i class="fa-solid fa-smile"></i></div>
+                        <h3 class="text-xl md:text-xl font-bold text-slate-900 mb-2">Ortodonție</h3>
+                        <p class="text-sm text-slate-500 leading-relaxed">Corectarea poziției dinților folosind aparate invizibile moderne (Spark / Invisalign) sau sisteme clasice, atât pentru copii cât și pentru adulți.</p>
+                    </div>
+                </div>
+
+                <div class="snap-center shrink-0 w-full md:w-auto min-h-[280px] md:min-h-0 md:h-[320px] glass bg-white/60 p-6 md:p-8 rounded-[2.5rem] border border-white/50 hover:shadow-xl transition flex flex-col justify-between">
+                    <div>
+                        <div class="w-12 h-12 bg-purple-50 text-purple-500 rounded-2xl flex items-center justify-center mb-4 md:mb-6 text-xl"><i class="fa-solid fa-shapes"></i></div>
+                        <h3 class="text-xl md:text-xl font-bold text-slate-900 mb-2">Pedodonție</h3>
+                        <p class="text-sm text-slate-500 leading-relaxed">Tratamente specializate pentru cei mici într-un mediu prietenos. Oferim inhalosedare pentru a elimina anxietatea și durerea.</p>
+                    </div>
+                </div>
+
+                <div onclick="togglePricingModal()" class="snap-center shrink-0 w-full md:w-auto min-h-[220px] md:min-h-0 md:h-auto bg-slate-900 text-white p-6 md:p-8 rounded-[2.5rem] cursor-pointer shadow-xl flex flex-col justify-center items-center text-center relative overflow-hidden group">
+                    <div class="absolute top-0 right-0 p-4 opacity-10 text-8xl group-hover:scale-110 transition duration-500"><i class="fa-solid fa-list-check"></i></div>
+                    <h3 class="text-xl font-bold mb-2 z-10">Lista Completă</h3>
+                    <p class="text-slate-300 text-xs mb-8 z-10 px-4">Vezi prețurile transparente pentru toate manoperele.</p>
+                    <div class="w-14 h-14 bg-white/10 rounded-full flex items-center justify-center backdrop-blur-sm group-hover:bg-white group-hover:text-slate-900 transition">
+                        <i class="fa-solid fa-plus text-lg"></i>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="mt-6 flex justify-center md:hidden">
+                <div id="services-dots" class="flex items-center gap-2"></div>
+            </div>
+        </div>
+    </section>
+
+    <section id="tehnologie" class="py-24 bg-white relative overflow-hidden">
+        <div class="absolute top-0 right-0 w-1/2 h-full bg-slate-50 skew-x-12 translate-x-32 hidden md:block"></div>
+        <div class="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-2 gap-16 items-center relative z-10">
+            <div>
+                <span class="text-blue-600 font-extrabold text-xs uppercase tracking-[0.2em]">Flux Digital</span>
+                <h2 class="text-4xl font-bold text-slate-900 mt-3 mb-8">Tehnologie, nu magie.</h2>
+                
+                <div class="space-y-8">
+                    <div class="flex gap-6 group">
+                        <div class="w-14 h-14 bg-slate-100 rounded-2xl flex-shrink-0 flex items-center justify-center text-slate-600 font-bold text-lg group-hover:bg-blue-600 group-hover:text-white transition duration-300">1</div>
+                        <div>
+                            <h4 class="text-xl font-bold text-slate-900 mb-2">Scanare Intraorală 3D</h4>
+                            <p class="text-slate-500 leading-relaxed">Adio amprente clasice cu pastă. Scanăm dantura în 60 de secunde cu precizie de microni pentru lucrări perfecte.</p>
+                        </div>
+                    </div>
+                    <div class="flex gap-6 group">
+                        <div class="w-14 h-14 bg-slate-100 rounded-2xl flex-shrink-0 flex items-center justify-center text-slate-600 font-bold text-lg group-hover:bg-blue-600 group-hover:text-white transition duration-300">2</div>
+                        <div>
+                            <h4 class="text-xl font-bold text-slate-900 mb-2">Microscop Zeiss</h4>
+                            <p class="text-slate-500 leading-relaxed">Vedem detalii invizibile ochiului liber. Salvăm dinți care altfel ar fi extrași prin tratamente de canal precise.</p>
+                        </div>
+                    </div>
+                    <div class="flex gap-6 group">
+                        <div class="w-14 h-14 bg-slate-100 rounded-2xl flex-shrink-0 flex items-center justify-center text-slate-600 font-bold text-lg group-hover:bg-blue-600 group-hover:text-white transition duration-300">3</div>
+                        <div>
+                            <h4 class="text-xl font-bold text-slate-900 mb-2">Laser Terapie</h4>
+                            <p class="text-slate-500 leading-relaxed">Tratamente parodontale și chirurgicale fără sângerare, fără durere și cu o vindecare accelerată.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="relative">
+                <div class="absolute inset-0 bg-blue-400 rounded-full blur-[100px] opacity-20"></div>
+                <img src="micro.jpg" class="relative rounded-[2.5rem] shadow-2xl rotate-3 hover:rotate-0 transition duration-500" alt="Dental Tech">
+            </div>
+        </div>
+    </section>
+
+    <section id="echipa" class="py-24 bg-slate-50/50">
+        <div class="max-w-7xl mx-auto px-6 text-center">
+            <h2 class="text-3xl font-bold text-slate-900 mb-12">Echipa Medicală</h2>
+            
+            <div id="team-slider" class="flex md:grid md:grid-cols-3 gap-6 md:gap-8 overflow-x-auto md:overflow-visible snap-x snap-mandatory scroll-smooth pb-8 -mx-6 px-6 md:mx-0 md:px-0 hide-scrollbar">
+                
+                <div class="bg-white p-8 rounded-[2.5rem] shadow-sm hover:shadow-xl transition snap-center shrink-0 w-full md:w-auto border border-slate-100 group">
+                    <div class="w-40 h-40 bg-blue-50 rounded-full mx-auto mb-6 flex items-center justify-center ring-4 ring-slate-50 group-hover:ring-blue-100 transition">
+                        <i class="fa-solid fa-user-doctor text-6xl text-blue-300"></i>
+                    </div>
+                    <h3 class="font-bold text-xl text-slate-900">Dr. Irina Cristea</h3>
+                    <p class="text-blue-600 text-sm font-bold uppercase tracking-wide mb-3">Medic Ortodont</p>
+                    <p class="text-slate-500 text-sm">Specialist în ortodonție invizibilă și estetică dentară.</p>
+                </div>
+
+                 <div class="bg-white p-8 rounded-[2.5rem] shadow-sm hover:shadow-xl transition snap-center shrink-0 w-full md:w-auto border border-slate-100 group">
+                    <div class="w-40 h-40 bg-teal-50 rounded-full mx-auto mb-6 flex items-center justify-center ring-4 ring-slate-50 group-hover:ring-teal-100 transition">
+                        <i class="fa-solid fa-user-doctor text-6xl text-teal-300"></i>
+                    </div>
+                    <h3 class="font-bold text-xl text-slate-900">Dr. Dragoș Bodăescu</h3>
+                    <p class="text-blue-600 text-sm font-bold uppercase tracking-wide mb-3">Chirurg OMF</p>
+                    <p class="text-slate-500 text-sm">Experiență vastă în implantologie complexă și chirurgie.</p>
+                </div>
+
+                 <div class="bg-white p-8 rounded-[2.5rem] shadow-sm hover:shadow-xl transition snap-center shrink-0 w-full md:w-auto border border-slate-100 group">
+                    <div class="w-40 h-40 bg-purple-50 rounded-full mx-auto mb-6 flex items-center justify-center ring-4 ring-slate-50 group-hover:ring-purple-100 transition">
+                        <i class="fa-solid fa-user-doctor text-6xl text-purple-300"></i>
+                    </div>
+                    <h3 class="font-bold text-xl text-slate-900">Dr. Veronica Leu</h3>
+                    <p class="text-blue-600 text-sm font-bold uppercase tracking-wide mb-3">Medic Pedodont</p>
+                    <p class="text-slate-500 text-sm">Răbdare infinită pentru micii pacienți. Specialist inhalosedare.</p>
+                </div>
+            </div>
+            
+            <div class="mt-2 flex justify-center md:hidden">
+                <div id="team-dots" class="flex items-center gap-2"></div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="py-24 relative z-10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6">
+            <div class="bg-slate-900 rounded-[2.5rem] overflow-hidden shadow-2xl ring-1 ring-white/10 grid grid-cols-1 lg:grid-cols-2 min-h-[650px] md:min-h-[550px]">
+                
+                <div class="relative p-10 md:p-12 lg:p-16 flex flex-col justify-center bg-slate-800/50 backdrop-blur-sm flip-perspective min-h-[500px]" id="contactFlip">
+                    <div class="flip-inner w-full h-full">
+                        
+                        <div class="flip-face flip-front flex flex-col justify-between h-full pb-12 md:pb-0">
+                            <div>
+                                <div class="flex justify-between items-start mb-8">
+                                    <h2 class="text-3xl md:text-4xl font-bold text-white">Contact</h2>
+                                    <button onclick="toggleContactMap(true)" class="group flex items-center gap-2 bg-white/10 hover:bg-white/20 px-4 py-2 rounded-full text-xs font-bold text-white transition">
+                                        <i class="fa-solid fa-map text-blue-400 group-hover:scale-110 transition"></i> Harta
+                                    </button>
+                                </div>
+
+                                <div class="space-y-8">
+                                    <div class="flex gap-5">
+                                        <div class="w-12 h-12 rounded-2xl bg-blue-600/20 flex items-center justify-center text-blue-400 text-xl shrink-0">
+                                            <i class="fa-solid fa-phone-volume"></i>
+                                        </div>
+                                        <div>
+                                            <p class="text-slate-400 text-xs font-bold uppercase tracking-wider mb-1">Urgențe & Programări</p>
+                                            <a href="tel:+40787838575" class="text-white text-xl md:text-2xl font-bold hover:text-blue-400 transition">+40 787 838 575</a>
+                                        </div>
+                                    </div>
+
+                                    <div class="flex gap-5">
+                                        <div class="w-12 h-12 rounded-2xl bg-teal-600/20 flex items-center justify-center text-teal-400 text-xl shrink-0">
+                                            <i class="fa-solid fa-location-dot"></i>
+                                        </div>
+                                        <div>
+                                            <p class="text-slate-400 text-xs font-bold uppercase tracking-wider mb-1">Locație</p>
+                                            <p class="text-white text-base leading-relaxed">Str. Serg. Maj. Samoilă Dumitru nr.11<br>Bloc 106, Scara 1, Sector 4</p>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="flex gap-5">
+                                        <div class="w-12 h-12 rounded-2xl bg-purple-600/20 flex items-center justify-center text-purple-400 text-xl shrink-0">
+                                            <i class="fa-solid fa-clock"></i>
+                                        </div>
+                                        <div>
+                                            <p class="text-slate-400 text-xs font-bold uppercase tracking-wider mb-1">Program</p>
+                                            <p class="text-white text-base">Luni - Vineri: <span class="text-white font-bold">12:00 - 20:00</span></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="mt-12 pt-8 border-t border-white/10 flex gap-4">
+                                <a href="#" class="w-10 h-10 rounded-full bg-white/5 hover:bg-blue-600 flex items-center justify-center text-white transition"><i class="fa-brands fa-facebook-f"></i></a>
+                                <a href="#" class="w-10 h-10 rounded-full bg-white/5 hover:bg-green-500 flex items-center justify-center text-white transition"><i class="fa-brands fa-whatsapp"></i></a>
+                                <a href="#" class="w-10 h-10 rounded-full bg-white/5 hover:bg-pink-600 flex items-center justify-center text-white transition"><i class="fa-brands fa-instagram"></i></a>
+                            </div>
+                        </div>
+
+                        <div class="flip-face flip-back rounded-3xl overflow-hidden relative h-full min-h-[400px]">
+                            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2710.313910855104!2d26.131253200000003!3d44.383935799999996!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x40b1ff5ca14a6253%3A0xb6b593e77a928be9!2sArtisDenta!5e1!3m2!1sro!2sro!4v1770908470345!5m2!1sro!2sro" class="w-full h-full border-0" allowfullscreen="" loading="lazy"></iframe>
+                            
+                            <div class="absolute bottom-6 left-0 right-0 flex justify-center z-50">
+                                <button onclick="toggleContactMap(false)" class="bg-slate-900/80 backdrop-blur-md text-white px-6 py-2.5 rounded-full text-sm font-bold shadow-2xl border border-white/20 hover:bg-slate-900 transition flex items-center gap-2">
+                                    <i class="fa-solid fa-arrow-left"></i> Înapoi la Contact
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="p-8 md:p-12 lg:p-16 bg-slate-900 relative">
+                    <div class="absolute top-0 right-0 w-64 h-64 bg-blue-600 rounded-full blur-[100px] opacity-20 pointer-events-none"></div>
+                    
+                    <h3 class="text-2xl font-bold text-white mb-2">Trimite un mesaj</h3>
+                    <p class="text-slate-400 text-sm mb-8">Răspundem rapid pe WhatsApp sau Email.</p>
+
+                    <form class="space-y-5" onsubmit="event.preventDefault();">
+                        <div class="grid grid-cols-2 gap-5">
+                            <div class="group">
+                                <label class="block text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-1 group-focus-within:text-blue-400 transition">Nume</label>
+                                <input type="text" placeholder="Ion Popescu" class="w-full bg-slate-800 border border-slate-700 rounded-xl px-4 py-3.5 text-white placeholder:text-slate-500 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition">
+                            </div>
+                            <div class="group">
+                                <label class="block text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-1 group-focus-within:text-blue-400 transition">Telefon</label>
+                                <input type="tel" placeholder="07xx..." class="w-full bg-slate-800 border border-slate-700 rounded-xl px-4 py-3.5 text-white placeholder:text-slate-500 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition">
+                            </div>
+                        </div>
+
+                        <div class="group">
+                            <label class="block text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-1 group-focus-within:text-blue-400 transition">Mesaj</label>
+                            <textarea rows="3" placeholder="Doresc o programare pentru..." class="w-full bg-slate-800 border border-slate-700 rounded-xl px-4 py-3.5 text-white placeholder:text-slate-500 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition resize-none"></textarea>
+                        </div>
+
+                        <button type="submit" class="w-full bg-blue-600 hover:bg-blue-500 text-white font-bold py-4 rounded-xl shadow-lg shadow-blue-900/50 transition transform active:scale-95 flex items-center justify-center gap-2">
+                            Trimite Solicitarea <i class="fa-solid fa-paper-plane text-xs"></i>
+                        </button>
+                        
+                        <p class="text-center text-xs text-slate-500 mt-4">Datele tale sunt procesate conform GDPR.</p>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="bg-slate-900 text-slate-300 py-16 text-sm border-t border-slate-800">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
+                <div>
+                    <img src="logo.png" alt="Artis Denta" class="h-10 w-auto mb-6 brightness-0 invert">
+                    <p class="text-slate-400 mb-6 leading-relaxed">
+                        Clinică stomatologică premium în Sectorul 4. Îmbinăm tehnologia digitală cu grija pentru pacient.
+                    </p>
+                    <div class="flex gap-4">
+                        <a href="#" class="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center hover:bg-blue-600 hover:text-white transition"><i class="fa-brands fa-facebook-f"></i></a>
+                        <a href="#" class="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center hover:bg-green-500 hover:text-white transition"><i class="fa-brands fa-whatsapp"></i></a>
+                    </div>
+                </div>
+                <div>
+                    <h4 class="text-white font-bold text-lg mb-6">Linkuri Utile</h4>
+                    <ul class="space-y-3">
+                        <li><a href="#acasa" class="hover:text-blue-400 transition">Acasă</a></li>
+                        <li><a href="#servicii" class="hover:text-blue-400 transition">Servicii & Tarife</a></li>
+                        <li><a href="#echipa" class="hover:text-blue-400 transition">Echipa Medicală</a></li>
+                        <li><a href="#contact" class="hover:text-blue-400 transition">Contact</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-white font-bold text-lg mb-6">Servicii</h4>
+                    <ul class="space-y-3">
+                        <li><a href="#" class="hover:text-blue-400 transition">Implantologie Digitală</a></li>
+                        <li><a href="#" class="hover:text-blue-400 transition">Estetică Dentară</a></li>
+                        <li><a href="#" class="hover:text-blue-400 transition">Ortodonție Invizibilă</a></li>
+                        <li><a href="#" class="hover:text-blue-400 transition">Pedodonție (Copii)</a></li>
+                        <li><a href="#" class="hover:text-blue-400 transition">Chirurgie Orală</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-white font-bold text-lg mb-6">Contact</h4>
+                    <p class="mb-2"><i class="fa-solid fa-phone text-blue-500 mr-2"></i> +40 787 838 575</p>
+                    <p class="mb-4"><i class="fa-solid fa-envelope text-blue-500 mr-2"></i> cabinet@artisdenta.ro</p>
+                    <div class="pt-6 border-t border-slate-800 mt-6">
+                        <ul class="space-y-2 text-xs text-slate-500">
+                            <li><a href="#" class="hover:text-white">Termeni și Condiții</a></li>
+                            <li><a href="#" class="hover:text-white">Politica de Confidențialitate</a></li>
+                            <li><a href="#" class="hover:text-white">Politica Cookies</a></li>
+                            <li><a href="#" class="hover:text-white">ANPC</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="border-t border-slate-800 pt-8 text-center text-slate-500 text-xs">
+                <p>© 2026 Artis Denta. Toate drepturile rezervate.</p>
+                <a href="https://sky.ro" target="_blank" rel="noopener noreferrer" class="mt-4 flex items-center justify-center gap-2 text-slate-400 hover:text-slate-300 transition-colors">
+                    <span>Crafted in the sky by</span>
+                    <img src="skyro.png" alt="Sky.ro" class="h-5 w-auto opacity-70 hover:opacity-100 transition-opacity">
+                </a>
+            </div>
+        </div>
+    </footer>
+
+    <div id="pricing-modal" class="fixed inset-0 z-[100] hidden">
+        <div class="absolute inset-0 bg-slate-900/60 backdrop-blur-sm transition-opacity" onclick="togglePricingModal()"></div>
+        <div class="absolute inset-x-0 bottom-0 md:inset-10 md:bottom-10 bg-white md:rounded-[2rem] shadow-2xl flex flex-col overflow-hidden h-[90vh] md:h-auto rounded-t-[2rem] animate-fade-in-up">
+            <div class="p-6 border-b border-slate-100 flex justify-between items-center bg-white z-20 shrink-0">
+                <div>
+                    <h2 class="text-xl md:text-2xl font-bold text-slate-900">Listă de Prețuri</h2>
+                    <p class="text-xs text-slate-500 font-medium bg-green-100 text-green-700 inline-block px-2 py-0.5 rounded mt-1">Valabil 2026</p>
+                </div>
+                <button onclick="togglePricingModal()" class="w-10 h-10 bg-slate-100 rounded-full flex items-center justify-center hover:bg-red-50 hover:text-red-500 transition text-slate-500"><i class="fa-solid fa-xmark text-lg"></i></button>
+            </div>
+            <div class="flex flex-col md:flex-row h-full overflow-hidden relative">
+                <div class="w-full md:w-72 bg-slate-50 border-r border-slate-100 p-3 flex md:flex-col gap-2 overflow-x-auto md:overflow-y-auto custom-scroll shrink-0 z-10">
+                    <button onclick="filterPrices('Terapie')" class="cat-btn active w-full text-left px-4 py-3 rounded-xl font-semibold text-sm transition-all flex items-center justify-between group bg-white shadow-sm text-blue-600 ring-1 ring-blue-100">Terapie <i class="fa-solid fa-chevron-right text-xs opacity-50"></i></button>
+                    <button onclick="filterPrices('Endodonţie')" class="cat-btn w-full text-left px-4 py-3 rounded-xl font-semibold text-sm transition-all flex items-center justify-between group text-slate-600 hover:bg-white/50">Endodonţie</button>
+                    <button onclick="filterPrices('Estetică')" class="cat-btn w-full text-left px-4 py-3 rounded-xl font-semibold text-sm transition-all flex items-center justify-between group text-slate-600 hover:bg-white/50">Estetică</button>
+                    <button onclick="filterPrices('Ortodonţie')" class="cat-btn w-full text-left px-4 py-3 rounded-xl font-semibold text-sm transition-all flex items-center justify-between group text-slate-600 hover:bg-white/50">Ortodonţie</button>
+                    <button onclick="filterPrices('Pedodonţie')" class="cat-btn w-full text-left px-4 py-3 rounded-xl font-semibold text-sm transition-all flex items-center justify-between group text-slate-600 hover:bg-white/50">Pedodonţie</button>
+                    <button onclick="filterPrices('Chirurgie')" class="cat-btn w-full text-left px-4 py-3 rounded-xl font-semibold text-sm transition-all flex items-center justify-between group text-slate-600 hover:bg-white/50">Chirurgie</button>
+                    <button onclick="filterPrices('Implantologie')" class="cat-btn w-full text-left px-4 py-3 rounded-xl font-semibold text-sm transition-all flex items-center justify-between group text-slate-600 hover:bg-white/50">Implantologie</button>
+                    <button onclick="filterPrices('Protetică')" class="cat-btn w-full text-left px-4 py-3 rounded-xl font-semibold text-sm transition-all flex items-center justify-between group text-slate-600 hover:bg-white/50">Protetică</button>
+                    <button onclick="filterPrices('Parodontologie')" class="cat-btn w-full text-left px-4 py-3 rounded-xl font-semibold text-sm transition-all flex items-center justify-between group text-slate-600 hover:bg-white/50">Parodontologie</button>
+                </div>
+                <div class="flex-1 overflow-y-auto custom-scroll p-0 md:p-8 bg-white relative">
+                    <div class="sticky top-0 bg-white/95 backdrop-blur-md p-4 md:p-0 md:pb-6 z-10 border-b md:border-0 border-slate-100">
+                        <div class="relative max-w-md">
+                            <i class="fa-solid fa-search absolute left-4 top-3.5 text-slate-400"></i>
+                            <input type="text" id="priceSearch" onkeyup="searchTable()" placeholder="Caută serviciu..." class="w-full bg-slate-50 border-0 md:border border-slate-200 rounded-xl py-3 pl-11 pr-4 focus:outline-none focus:ring-2 focus:ring-blue-500 transition text-sm">
+                        </div>
+                    </div>
+                    <div id="price-container" class="p-4 md:p-0 pb-20">
+                        <!-- Terapie -->
+                        <div class="price-section" data-cat="Terapie">
+                            <h3 class="text-lg font-bold mb-4 text-slate-900">Terapie</h3>
+                            <div class="bg-white rounded-2xl border border-slate-100 overflow-hidden">
+                                <table class="w-full text-left text-sm"><tbody class="divide-y divide-slate-100">
+                                    <tr class="hover:bg-slate-50"><td class="py-3 px-4">Consultație stomatologie generală</td><td class="py-3 px-4 font-bold text-right whitespace-nowrap">50 RON</td></tr>
+                                    <tr class="hover:bg-slate-50"><td class="py-3 px-4">Consultație stomatologie generală - cameră video intraorală</td><td class="py-3 px-4 font-bold text-right whitespace-nowrap">100 RON</td></tr>
+                                    <tr class="hover:bg-slate-50"><td class="py-3 px-4">Consultație - plan de tratament stomatologie generală</td><td class="py-3 px-4 font-bold text-right whitespace-nowrap">100 RON</td></tr>
+                                    <tr class="hover:bg-slate-50"><td class="py-3 px-4">Obturație compozit fotopolimerizabil o suprafață - cavitate superficială</td><td class="py-3 px-4 font-bold text-right whitespace-nowrap">270 RON</td></tr>
+                                    <tr class="hover:bg-slate-50"><td class="py-3 px-4">Obturație compozit fotopolimerizabil o suprafață - cavitate medie</td><td class="py-3 px-4 font-bold text-right whitespace-nowrap">300 RON</td></tr>
+                                    <tr class="hover:bg-slate-50"><td class="py-3 px-4">Obturație compozit fotopolimerizabil o suprafață - cavitate profundă</td><td class="py-3 px-4 font-bold text-right whitespace-nowrap">330 RON</td></tr>
+                                    <tr class="hover:bg-slate-50"><td class="py-3 px-4">Obturație compozit fotopolimerizabil două suprafețe - cavitate medie</td><td class="py-3 px-4 font-bold text-right whitespace-nowrap">350 RON</td></tr>
+                                    <tr class="hover:bg-slate-50"><td class="py-3 px-4">Obturație compozit fotopolimerizabil două suprafețe - cavitate profundă</td><td class="py-3 px-4 font-bold text-right whitespace-nowrap">370 RON</td></tr>
+                                    <tr class="hover:bg-slate-50"><td class="py-3 px-4">Obturație compozit fotopolimerizabil trei suprafețe</td><td class="py-3 px-4 font-bold text-right whitespace-nowrap">400 RON</td></tr>
+                                    <tr class="hover:bg-slate-50"><td class="py-3 px-4">Obturație glassionomer o suprafață</td><td class="py-3 px-4 font-bold text-right whitespace-nowrap">280 RON</td></tr>
+                                    <tr class="hover:bg-slate-50"><td class="py-3 px-4">Obturație glassionomer două suprafețe</td><td class="py-3 px-4 font-bold text-right whitespace-nowrap">320 RON</td></tr>
+                                    <tr class="hover:bg-slate-50"><td class="py-3 px-4">Obturație glassionomer trei suprafețe</td><td class="py-3 px-4 font-bold text-right whitespace-nowrap">350 RON</td></tr>
+                                    <tr class="hover:bg-slate-50"><td class="py-3 px-4">Coafaj indirect/direct</td><td class="py-3 px-4 font-bold text-right whitespace-nowrap">50 RON</td></tr>
+                                    <tr class="hover:bg-slate-50"><td class="py-3 px-4">Obturație de bază CIS</td><td class="py-3 px-4 font-bold text-right whitespace-nowrap">50 RON</td></tr>
+                                    <tr class="hover:bg-slate-50"><td class="py-3 px-4">Obturație coronară provizorie Coltosol</td><td class="py-3 px-4 font-bold text-right whitespace-nowrap">50 RON</td></tr>
+                                    <tr class="hover:bg-slate-50"><td class="py-3 px-4">Îndepărtare obturație coronară veche</td><td class="py-3 px-4 font-bold text-right whitespace-nowrap">50 RON</td></tr>
+                                    <tr class="hover:bg-slate-50"><td class="py-3 px-4">Izolare cu digă</td><td class="py-3 px-4 font-bold text-right whitespace-nowrap">50 RON</td></tr>
+                                    <tr class="hover:bg-slate-50"><td class="py-3 px-4">Sigilare șanțuri și fosete</td><td class="py-3 px-4 font-bold text-right whitespace-nowrap">180 RON</td></tr>
+                                    <tr class="hover:bg-slate-50"><td class="py-3 px-4">Tratament fluorizare per dinte</td><td class="py-3 px-4 font-bold text-right whitespace-nowrap">50 RON</td></tr>
+                                </tbody></table>
+                            </div>
+                        </div>
+                        <!-- Endodonţie -->
+                        <div class="price-section hidden" data-cat="Endodonţie">
+                            <h3 class="text-lg font-bold mb-4 text-slate-900">Endodonţie</h3>
+                            <div class="bg-white rounded-2xl border border-slate-100 overflow-hidden">
+                                <table class="w-full text-left text-sm"><tbody class="divide-y divide-slate-100">
+                                    <tr class="hover:bg-slate-50"><td class="py-3 px-4">Anestezie</td><td class="py-3 px-4 font-bold text-right whitespace-nowrap">50 RON</td></tr>
+                                    <tr class="hover:bg-slate-50"><td class="py-3 px-4">Pansament calmant</td><td class="py-3 px-4 font-bold text-right whitespace-nowrap">150 RON</td></tr>
+                                    <tr class="hover:bg-slate-50"><td class="py-3 px-4">Pansament devitalizant (Depulpin)</td><td class="py-3 px-4 font-bold text-right whitespace-nowrap">100 RON</td></tr>
+                                    <tr class="hover:bg-slate-50"><td class="py-3 px-4">Pansament antiseptic</td><td class="py-3 px-4 font-bold text-right whitespace-nowrap">100 RON</td></tr>
+                                    <tr class="hover:bg-slate-50"><td class="py-3 px-4">Drenaj endodontic</td><td class="py-3 px-4 font-bold text-right whitespace-nowrap">200 RON</td></tr>
+                                    <tr class="hover:bg-slate-50"><td class="py-3 px-4">Extirpare vitală/devitală 1-2 canale</td><td class="py-3 px-4 font-bold text-right whitespace-nowrap">150 RON</td></tr>
+                                    <tr class="hover:bg-slate-50"><td class="py-3 px-4">Extirpare vitală/devitală 3-4 canale</td><td class="py-3 px-4 font-bold text-right whitespace-nowrap">250 RON</td></tr>
+                                    <tr class="hover:bg-slate-50"><td class="py-3 px-4">Obturație definitivă un canal</td><td class="py-3 px-4 font-bold text-right whitespace-nowrap">250 RON</td></tr>
+                                    <tr class="hover:bg-slate-50"><td class="py-3 px-4">Obturație definitivă două canale</td><td class="py-3 px-4 font-bold text-right whitespace-nowrap">300 RON</td></tr>
+                                    <tr class="hover:bg-slate-50"><td class="py-3 px-4">Obturație definitivă trei canale</td><td class="py-3 px-4 font-bold text-right whitespace-nowrap">400 RON</td></tr>
+                                    <tr class="hover:bg-slate-50"><td class="py-3 px-4">Obturație definitivă patru canale</td><td class="py-3 px-4 font-bold text-right whitespace-nowrap">450 RON</td></tr>
+                                    <tr class="hover:bg-slate-50"><td class="py-3 px-4">Obturație de canal provizorie (pastă Walkhoff/hidroxid de Ca) 1-2 canale</td><td class="py-3 px-4 font-bold text-right whitespace-nowrap">150 RON</td></tr>
+                                    <tr class="hover:bg-slate-50"><td class="py-3 px-4">Obturație de canal provizorie (pastă Walkhoff/hidroxid de Ca) 3-4 canale</td><td class="py-3 px-4 font-bold text-right whitespace-nowrap">200 RON</td></tr>
+                                    <tr class="hover:bg-slate-50"><td class="py-3 px-4">Dezobturare per canal radicular</td><td class="py-3 px-4 font-bold text-right whitespace-nowrap">100 RON</td></tr>
+                                    <tr class="hover:bg-slate-50"><td class="py-3 px-4">Obturație provizorie glassionomer</td><td class="py-3 px-4 font-bold text-right whitespace-nowrap">100 RON</td></tr>
+                                    <tr class="hover:bg-slate-50"><td class="py-3 px-4">Refacere perete coronar compozit / glassionomer</td><td class="py-3 px-4 font-bold text-right whitespace-nowrap">100 RON</td></tr>
+                                </tbody></table>
+                            </div>
+                        </div>
+                        <!-- Estetică -->
+                        <div class="price-section hidden" data-cat="Estetică">
+                            <h3 class="text-lg font-bold mb-4 text-slate-900">Estetică dentară</h3>
+                            <div class="bg-white rounded-2xl border border-slate-100 overflow-hidden">
+                                <table class="w-full text-left text-sm"><tbody class="divide-y divide-slate-100">
+                                    <tr class="hover:bg-slate-50"><td class="py-3 px-4">Tratament albire dentară cu ajutorul laserului ambele arcade</td><td class="py-3 px-4 font-bold text-right whitespace-nowrap">1.400 RON</td></tr>
+                                    <tr class="hover:bg-slate-50"><td class="py-3 px-4">Tratament albire dentară ambele arcade</td><td class="py-3 px-4 font-bold text-right whitespace-nowrap">800 RON</td></tr>
+                                    <tr class="hover:bg-slate-50"><td class="py-3 px-4">Albire intracoronară (dinte devital) / ședință</td><td class="py-3 px-4 font-bold text-right whitespace-nowrap">350 RON</td></tr>
+                                    <tr class="hover:bg-slate-50"><td class="py-3 px-4">Fațetă compozit realizată în cabinet</td><td class="py-3 px-4 font-bold text-right whitespace-nowrap">650 RON</td></tr>
+                                    <tr class="hover:bg-slate-50"><td class="py-3 px-4">Fațetă ceramică E-Max realizată în laborator</td><td class="py-3 px-4 font-bold text-right whitespace-nowrap">2.200 RON</td></tr>
+                                    <tr class="hover:bg-slate-50"><td class="py-3 px-4">Aplicare bijuterie dentară (include bijuteria)</td><td class="py-3 px-4 font-bold text-right whitespace-nowrap">450 RON</td></tr>
+                                </tbody></table>
+                            </div>
+                        </div>
+                        <!-- Ortodonţie -->
+                        <div class="price-section hidden" data-cat="Ortodonţie">
+                            <h3 class="text-lg font-bold mb-4 text-slate-900">Ortodonţie</h3>
+                            <div class="bg-white rounded-2xl border border-slate-100 overflow-hidden">
+                                <table class="w-full text-left text-sm"><tbody class="divide-y divide-slate-100">
+                                    <tr class="hover:bg-slate-50"><td class="py-3 px-4">Consultație primară MS Ortodonţie</td><td class="py-3 px-4 font-bold text-right whitespace-nowrap">150 RON</td></tr>
+                                    <tr class="hover:bg-slate-50"><td class="py-3 px-4">Plan de tratament</td><td class="py-3 px-4 font-bold text-right whitespace-nowrap">200 RON</td></tr>
+                                    <tr class="hover:bg-slate-50"><td class="py-3 px-4">Consultație ortodonţie</td><td class="py-3 px-4 font-bold text-right whitespace-nowrap">80 RON</td></tr>
+                                    <tr class="hover:bg-slate-50"><td class="py-3 px-4">Amprentă în scop ortodontic</td><td class="py-3 px-4 font-bold text-right whitespace-nowrap">150 RON</td></tr>
+                                    <tr class="hover:bg-slate-50"><td class="py-3 px-4">APARAT MOBIL per arcadă</td><td class="py-3 px-4 font-bold text-right whitespace-nowrap">1.400 RON</td></tr>
+                                    <tr class="hover:bg-slate-50"><td class="py-3 px-4">Aplicare APARAT MOBIL per arcadă</td><td class="py-3 px-4 font-bold text-right whitespace-nowrap">50 RON</td></tr>
+                                    <tr class="hover:bg-slate-50"><td class="py-3 px-4">Control APARAT MOBIL o arcadă</td><td class="py-3 px-4 font-bold text-right whitespace-nowrap">150 RON</td></tr>
+                                    <tr class="hover:bg-slate-50"><td class="py-3 px-4">Control APARAT MOBIL două arcade</td><td class="py-3 px-4 font-bold text-right whitespace-nowrap">150 RON</td></tr>
+                                    <tr class="hover:bg-slate-50"><td class="py-3 px-4">Reparație APARAT MOBIL</td><td class="py-3 px-4 font-bold text-right whitespace-nowrap">550 RON</td></tr>
+                                    <tr class="hover:bg-slate-50"><td class="py-3 px-4">Monobloc - activator</td><td class="py-3 px-4 font-bold text-right whitespace-nowrap">1.800 RON</td></tr>
+                                    <tr class="hover:bg-slate-50"><td class="py-3 px-4">Ocluzie construită</td><td class="py-3 px-4 font-bold text-right whitespace-nowrap">150 RON</td></tr>
+                                    <tr class="hover:bg-slate-50"><td class="py-3 px-4">Trainer</td><td class="py-3 px-4 font-bold text-right whitespace-nowrap">1.100 RON</td></tr>
+                                    <tr class="hover:bg-slate-50"><td class="py-3 px-4">Control trainer</td><td class="py-3 px-4 font-bold text-right whitespace-nowrap">60 RON</td></tr>
+                                    <tr class="hover:bg-slate-50"><td class="py-3 px-4">APARAT EXTRAORAL mască DELAIRE</td><td class="py-3 px-4 font-bold text-right whitespace-nowrap">850 RON</td></tr>
+                                    <tr class="hover:bg-slate-50"><td class="py-3 px-4">APARAT FIX METALIC per arcadă</td><td class="py-3 px-4 font-bold text-right whitespace-nowrap">3.000 RON</td></tr>
+                                    <tr class="hover:bg-slate-50"><td class="py-3 px-4">APARAT FIX SAFIR per arcadă</td><td class="py-3 px-4 font-bold text-right whitespace-nowrap">4.000 RON</td></tr>
+                                    <tr class="hover:bg-slate-50"><td class="py-3 px-4">APARAT FIX LINGUAL 2D per arcadă</td><td class="py-3 px-4 font-bold text-right whitespace-nowrap">6.500 RON</td></tr>
+                                    <tr class="hover:bg-slate-50"><td class="py-3 px-4">Aplicare APARAT FIX per arcadă</td><td class="py-3 px-4 font-bold text-right whitespace-nowrap">200 RON</td></tr>
+                                    <tr class="hover:bg-slate-50"><td class="py-3 px-4">Control APARAT FIX o arcadă</td><td class="py-3 px-4 font-bold text-right whitespace-nowrap">150 RON</td></tr>
+                                    <tr class="hover:bg-slate-50"><td class="py-3 px-4">Control APARAT FIX două arcade</td><td class="py-3 px-4 font-bold text-right whitespace-nowrap">220 RON</td></tr>
+                                    <tr class="hover:bg-slate-50"><td class="py-3 px-4">Îndepărtare APARAT FIX per arcadă</td><td class="py-3 px-4 font-bold text-right whitespace-nowrap">350 RON</td></tr>
+                                    <tr class="hover:bg-slate-50"><td class="py-3 px-4">Gutieră contenţie</td><td class="py-3 px-4 font-bold text-right whitespace-nowrap">550 RON</td></tr>
+                                    <tr class="hover:bg-slate-50"><td class="py-3 px-4">Placă mobilă contenţie</td><td class="py-3 px-4 font-bold text-right whitespace-nowrap">750 RON</td></tr>
+                                    <tr class="hover:bg-slate-50"><td class="py-3 px-4">Retainer metalic colat, realizat în cabinet</td><td class="py-3 px-4 font-bold text-right whitespace-nowrap">800 RON</td></tr>
+                                    <tr class="hover:bg-slate-50"><td class="py-3 px-4">Retainer metalic MEMOTAIN colat, realizat digital</td><td class="py-3 px-4 font-bold text-right whitespace-nowrap">1.400 RON</td></tr>
+                                    <tr class="hover:bg-slate-50"><td class="py-3 px-4">Control contenţie</td><td class="py-3 px-4 font-bold text-right whitespace-nowrap">50 RON</td></tr>
+                                    <tr class="hover:bg-slate-50"><td class="py-3 px-4">Disjunctor</td><td class="py-3 px-4 font-bold text-right whitespace-nowrap">1.750 RON</td></tr>
+                                    <tr class="hover:bg-slate-50"><td class="py-3 px-4">Lipbumper</td><td class="py-3 px-4 font-bold text-right whitespace-nowrap">800 RON</td></tr>
+                                    <tr class="hover:bg-slate-50"><td class="py-3 px-4">Arc lingual</td><td class="py-3 px-4 font-bold text-right whitespace-nowrap">800 RON</td></tr>
+                                    <tr class="hover:bg-slate-50"><td class="py-3 px-4">Recolare Bracket metalic</td><td class="py-3 px-4 font-bold text-right whitespace-nowrap">80 RON</td></tr>
+                                    <tr class="hover:bg-slate-50"><td class="py-3 px-4">Recolare Bracket safir</td><td class="py-3 px-4 font-bold text-right whitespace-nowrap">150 RON</td></tr>
+                                    <tr class="hover:bg-slate-50"><td class="py-3 px-4">Recolare Tubușor vestibular</td><td class="py-3 px-4 font-bold text-right whitespace-nowrap">100 RON</td></tr>
+                                    <tr class="hover:bg-slate-50"><td class="py-3 px-4">Înlocuire inel molar rupt</td><td class="py-3 px-4 font-bold text-right whitespace-nowrap">100 RON</td></tr>
+                                    <tr class="hover:bg-slate-50"><td class="py-3 px-4">Schimbare arc fizionomic, la cererea pacientului</td><td class="py-3 px-4 font-bold text-right whitespace-nowrap">100 RON</td></tr>
+                                    <tr class="hover:bg-slate-50"><td class="py-3 px-4">Înălțare de ocluzie în scop ortodontic</td><td class="py-3 px-4 font-bold text-right whitespace-nowrap">100 RON</td></tr>
+                                    <tr class="hover:bg-slate-50"><td class="py-3 px-4">Miniimplant ortodontic</td><td class="py-3 px-4 font-bold text-right whitespace-nowrap">550 RON</td></tr>
+                                    <tr class="hover:bg-slate-50"><td class="py-3 px-4">Gutieră bruxism o arcadă</td><td class="py-3 px-4 font-bold text-right whitespace-nowrap">450 RON</td></tr>
+                                    <tr class="hover:bg-slate-50"><td class="py-3 px-4">INVISALIGN dificultate mică</td><td class="py-3 px-4 font-bold text-right whitespace-nowrap">4.500 RON</td></tr>
+                                    <tr class="hover:bg-slate-50"><td class="py-3 px-4">INVISALIGN dificultate medie</td><td class="py-3 px-4 font-bold text-right whitespace-nowrap">7.000 RON</td></tr>
+                                    <tr class="hover:bg-slate-50"><td class="py-3 px-4">INVISALIGN dificultate mare</td><td class="py-3 px-4 font-bold text-right whitespace-nowrap">11.800 RON</td></tr>
+                                </tbody></table>
+                            </div>
+                        </div>
+                        <!-- Pedodonţie -->
+                        <div class="price-section hidden" data-cat="Pedodonţie">
+                            <h3 class="text-lg font-bold mb-4 text-slate-900">Pedodonţie</h3>
+                            <div class="bg-white rounded-2xl border border-slate-100 overflow-hidden">
+                                <table class="w-full text-left text-sm"><tbody class="divide-y divide-slate-100">
+                                    <tr class="hover:bg-slate-50"><td class="py-3 px-4">Consultație pedodonţie</td><td class="py-3 px-4 font-bold text-right whitespace-nowrap">150 RON</td></tr>
+                                    <tr class="hover:bg-slate-50"><td class="py-3 px-4">Sigilare șanțuri și fosete dinți temporari (DT)</td><td class="py-3 px-4 font-bold text-right whitespace-nowrap">100 RON</td></tr>
+                                    <tr class="hover:bg-slate-50"><td class="py-3 px-4">Sigilare șanțuri și fosete premolar</td><td class="py-3 px-4 font-bold text-right whitespace-nowrap">150 RON</td></tr>
+                                    <tr class="hover:bg-slate-50"><td class="py-3 px-4">Sigilare șanțuri și fosete molar permanent</td><td class="py-3 px-4 font-bold text-right whitespace-nowrap">180 RON</td></tr>
+                                    <tr class="hover:bg-slate-50"><td class="py-3 px-4">Revelator placă bacteriană</td><td class="py-3 px-4 font-bold text-right whitespace-nowrap">80 RON</td></tr>
+                                    <tr class="hover:bg-slate-50"><td class="py-3 px-4">Detartraj/ periaj profesional/ AirFlow DT per arcadă</td><td class="py-3 px-4 font-bold text-right whitespace-nowrap">100 RON</td></tr>
+                                    <tr class="hover:bg-slate-50"><td class="py-3 px-4">Detartraj, periaj profesional, AirFlow DT ambele arcade</td><td class="py-3 px-4 font-bold text-right whitespace-nowrap">180 RON</td></tr>
+                                    <tr class="hover:bg-slate-50"><td class="py-3 px-4">Fluorizare DT per arcadă</td><td class="py-3 px-4 font-bold text-right whitespace-nowrap">80 RON</td></tr>
+                                    <tr class="hover:bg-slate-50"><td class="py-3 px-4">Anestezie topică spray/gel</td><td class="py-3 px-4 font-bold text-right whitespace-nowrap">20 RON</td></tr>
+                                    <tr class="hover:bg-slate-50"><td class="py-3 px-4">Extracție DT cu mobilitate</td><td class="py-3 px-4 font-bold text-right whitespace-nowrap">100 RON</td></tr>
+                                    <tr class="hover:bg-slate-50"><td class="py-3 px-4">Extracție rest radicular dinte temporar</td><td class="py-3 px-4 font-bold text-right whitespace-nowrap">50 RON</td></tr>
+                                    <tr class="hover:bg-slate-50"><td class="py-3 px-4">Extracție DT fără mobilitate</td><td class="py-3 px-4 font-bold text-right whitespace-nowrap">250 RON</td></tr>
+                                    <tr class="hover:bg-slate-50"><td class="py-3 px-4">Refacere muchie incizală DT</td><td class="py-3 px-4 font-bold text-right whitespace-nowrap">150 RON</td></tr>
+                                    <tr class="hover:bg-slate-50"><td class="py-3 px-4">Refacere muchie incizală DP</td><td class="py-3 px-4 font-bold text-right whitespace-nowrap">350 RON</td></tr>
+                                    <tr class="hover:bg-slate-50"><td class="py-3 px-4">Obturație glassionomer o suprafață</td><td class="py-3 px-4 font-bold text-right whitespace-nowrap">210 RON</td></tr>
+                                    <tr class="hover:bg-slate-50"><td class="py-3 px-4">Obturație glassionomer două suprafețe</td><td class="py-3 px-4 font-bold text-right whitespace-nowrap">230 RON</td></tr>
+                                    <tr class="hover:bg-slate-50"><td class="py-3 px-4">Obturație glassionomer trei suprafețe</td><td class="py-3 px-4 font-bold text-right whitespace-nowrap">250 RON</td></tr>
+                                    <tr class="hover:bg-slate-50"><td class="py-3 px-4">Obturație de bază glassionomer</td><td class="py-3 px-4 font-bold text-right whitespace-nowrap">50 RON</td></tr>
+                                    <tr class="hover:bg-slate-50"><td class="py-3 px-4">Obturație compozit o suprafață - cavitate superficială</td><td class="py-3 px-4 font-bold text-right whitespace-nowrap">220 RON</td></tr>
+                                    <tr class="hover:bg-slate-50"><td class="py-3 px-4">Obturație compozit o suprafață - cavitate profundă (include coafaj)</td><td class="py-3 px-4 font-bold text-right whitespace-nowrap">240 RON</td></tr>
+                                    <tr class="hover:bg-slate-50"><td class="py-3 px-4">Obturație compozit două suprafețe</td><td class="py-3 px-4 font-bold text-right whitespace-nowrap">250 RON</td></tr>
+                                    <tr class="hover:bg-slate-50"><td class="py-3 px-4">Obturație compozit trei suprafețe</td><td class="py-3 px-4 font-bold text-right whitespace-nowrap">270 RON</td></tr>
+                                    <tr class="hover:bg-slate-50"><td class="py-3 px-4">Pansament calmant</td><td class="py-3 px-4 font-bold text-right whitespace-nowrap">60 RON</td></tr>
+                                    <tr class="hover:bg-slate-50"><td class="py-3 px-4">Pansament devitalizant</td><td class="py-3 px-4 font-bold text-right whitespace-nowrap">60 RON</td></tr>
+                                    <tr class="hover:bg-slate-50"><td class="py-3 px-4">Pulpotomie DT</td><td class="py-3 px-4 font-bold text-right whitespace-nowrap">50 RON</td></tr>
+                                    <tr class="hover:bg-slate-50"><td class="py-3 px-4">Pastă mumifiantă</td><td class="py-3 px-4 font-bold text-right whitespace-nowrap">80 RON</td></tr>
+                                    <tr class="hover:bg-slate-50"><td class="py-3 px-4">Drenaj endodontic DT</td><td class="py-3 px-4 font-bold text-right whitespace-nowrap">150 RON</td></tr>
+                                    <tr class="hover:bg-slate-50"><td class="py-3 px-4">Pansament antiseptic DT</td><td class="py-3 px-4 font-bold text-right whitespace-nowrap">60 RON</td></tr>
+                                    <tr class="hover:bg-slate-50"><td class="py-3 px-4">Pastă Walkhoff semichitoasă</td><td class="py-3 px-4 font-bold text-right whitespace-nowrap">80 RON</td></tr>
+                                    <tr class="hover:bg-slate-50"><td class="py-3 px-4">Extirpare vitală/ devitală DT</td><td class="py-3 px-4 font-bold text-right whitespace-nowrap">100 RON</td></tr>
+                                    <tr class="hover:bg-slate-50"><td class="py-3 px-4">Obturație canal DT</td><td class="py-3 px-4 font-bold text-right whitespace-nowrap">150 RON</td></tr>
+                                    <tr class="hover:bg-slate-50"><td class="py-3 px-4">Inhalosedare / ședință</td><td class="py-3 px-4 font-bold text-right whitespace-nowrap">250 RON</td></tr>
+                                </tbody></table>
+                            </div>
+                        </div>
+                        <!-- Chirurgie -->
+                        <div class="price-section hidden" data-cat="Chirurgie">
+                            <h3 class="text-lg font-bold mb-4 text-slate-900">Chirurgie</h3>
+                            <div class="bg-white rounded-2xl border border-slate-100 overflow-hidden">
+                                <table class="w-full text-left text-sm"><tbody class="divide-y divide-slate-100">
+                                    <tr class="hover:bg-slate-50"><td class="py-3 px-4">Consultație MS Chirurgie</td><td class="py-3 px-4 font-bold text-right whitespace-nowrap">150 RON</td></tr>
+                                    <tr class="hover:bg-slate-50"><td class="py-3 px-4">Extracție monoradiculari</td><td class="py-3 px-4 font-bold text-right whitespace-nowrap">250 RON</td></tr>
+                                    <tr class="hover:bg-slate-50"><td class="py-3 px-4">Extracție pluriradiculari</td><td class="py-3 px-4 font-bold text-right whitespace-nowrap">350 RON</td></tr>
+                                    <tr class="hover:bg-slate-50"><td class="py-3 px-4">Extracție molar de minte erupt</td><td class="py-3 px-4 font-bold text-right whitespace-nowrap">400 RON</td></tr>
+                                    <tr class="hover:bg-slate-50"><td class="py-3 px-4">Extracție molar de minte semi-inclus</td><td class="py-3 px-4 font-bold text-right whitespace-nowrap">450 RON</td></tr>
+                                    <tr class="hover:bg-slate-50"><td class="py-3 px-4">Extracție molar de minte inclus</td><td class="py-3 px-4 font-bold text-right whitespace-nowrap">550 RON</td></tr>
+                                    <tr class="hover:bg-slate-50"><td class="py-3 px-4">Extracție canin/premolar inclus</td><td class="py-3 px-4 font-bold text-right whitespace-nowrap">800 RON</td></tr>
+                                    <tr class="hover:bg-slate-50"><td class="py-3 px-4">Descoperire chirurgicală canin inclus, în scop ortodontic</td><td class="py-3 px-4 font-bold text-right whitespace-nowrap">1.000 RON</td></tr>
+                                    <tr class="hover:bg-slate-50"><td class="py-3 px-4">Alveolotomie</td><td class="py-3 px-4 font-bold text-right whitespace-nowrap">150 RON</td></tr>
+                                    <tr class="hover:bg-slate-50"><td class="py-3 px-4">Abces vestibular/oral incizie și drenaj</td><td class="py-3 px-4 font-bold text-right whitespace-nowrap">200 RON</td></tr>
+                                    <tr class="hover:bg-slate-50"><td class="py-3 px-4">Tratament hemoragie post-extracțională</td><td class="py-3 px-4 font-bold text-right whitespace-nowrap">100 RON</td></tr>
+                                    <tr class="hover:bg-slate-50"><td class="py-3 px-4">Tratament alveolită post-extracțională</td><td class="py-3 px-4 font-bold text-right whitespace-nowrap">100 RON</td></tr>
+                                    <tr class="hover:bg-slate-50"><td class="py-3 px-4">Gingivectomie per dinte</td><td class="py-3 px-4 font-bold text-right whitespace-nowrap">150 RON</td></tr>
+                                    <tr class="hover:bg-slate-50"><td class="py-3 px-4">Frenectomie</td><td class="py-3 px-4 font-bold text-right whitespace-nowrap">350 RON</td></tr>
+                                    <tr class="hover:bg-slate-50"><td class="py-3 px-4">Decapușonare molar de minte</td><td class="py-3 px-4 font-bold text-right whitespace-nowrap">150 RON</td></tr>
+                                    <tr class="hover:bg-slate-50"><td class="py-3 px-4">Rezecție apicală dinți frontali</td><td class="py-3 px-4 font-bold text-right whitespace-nowrap">500 RON</td></tr>
+                                    <tr class="hover:bg-slate-50"><td class="py-3 px-4">Rezecție apicală premolari</td><td class="py-3 px-4 font-bold text-right whitespace-nowrap">600 RON</td></tr>
+                                    <tr class="hover:bg-slate-50"><td class="py-3 px-4">Rezecție apicală molari</td><td class="py-3 px-4 font-bold text-right whitespace-nowrap">750 RON</td></tr>
+                                    <tr class="hover:bg-slate-50"><td class="py-3 px-4">Plastie comunicare oro-sinusală</td><td class="py-3 px-4 font-bold text-right whitespace-nowrap">750 RON</td></tr>
+                                    <tr class="hover:bg-slate-50"><td class="py-3 px-4">Regularizare de creastă (pe hemiarcadă)</td><td class="py-3 px-4 font-bold text-right whitespace-nowrap">350 RON</td></tr>
+                                    <tr class="hover:bg-slate-50"><td class="py-3 px-4">Adâncire șanț vestibular (pe hemiarcadă)</td><td class="py-3 px-4 font-bold text-right whitespace-nowrap">250 RON</td></tr>
+                                    <tr class="hover:bg-slate-50"><td class="py-3 px-4">Adiție osoasă RTR CONE</td><td class="py-3 px-4 font-bold text-right whitespace-nowrap">300 RON</td></tr>
+                                    <tr class="hover:bg-slate-50"><td class="py-3 px-4">Burete hemostatic</td><td class="py-3 px-4 font-bold text-right whitespace-nowrap">50 RON</td></tr>
+                                    <tr class="hover:bg-slate-50"><td class="py-3 px-4">Extracție rest radicular</td><td class="py-3 px-4 font-bold text-right whitespace-nowrap">150 RON</td></tr>
+                                    <tr class="hover:bg-slate-50"><td class="py-3 px-4">Extracție dinte parodontotic</td><td class="py-3 px-4 font-bold text-right whitespace-nowrap">150 RON</td></tr>
+                                </tbody></table>
+                            </div>
+                        </div>
+                        <!-- Implantologie -->
+                        <div class="price-section hidden" data-cat="Implantologie">
+                            <h3 class="text-lg font-bold mb-4 text-slate-900">Implantologie</h3>
+                            <div class="bg-white rounded-2xl border border-slate-100 overflow-hidden">
+                                <table class="w-full text-left text-sm"><tbody class="divide-y divide-slate-100">
+                                    <tr class="hover:bg-slate-50"><td class="py-3 px-4">Consultație primară</td><td class="py-3 px-4 font-bold text-right whitespace-nowrap">100 RON</td></tr>
+                                    <tr class="hover:bg-slate-50"><td class="py-3 px-4">Implant dentar INNO / MEGAGEN</td><td class="py-3 px-4 font-bold text-right whitespace-nowrap">2.650 RON</td></tr>
+                                    <tr class="hover:bg-slate-50"><td class="py-3 px-4">Coroană pe implant (zirconiu stratificat)</td><td class="py-3 px-4 font-bold text-right whitespace-nowrap">1.350 RON</td></tr>
+                                    <tr class="hover:bg-slate-50"><td class="py-3 px-4">Coroană pe implant (metalo-ceramică)</td><td class="py-3 px-4 font-bold text-right whitespace-nowrap">1.050 RON</td></tr>
+                                    <tr class="hover:bg-slate-50"><td class="py-3 px-4">Sinus Lifting extern</td><td class="py-3 px-4 font-bold text-right whitespace-nowrap">2.500 RON</td></tr>
+                                    <tr class="hover:bg-slate-50"><td class="py-3 px-4">Material adiție osoasă / cm3</td><td class="py-3 px-4 font-bold text-right whitespace-nowrap">600 RON</td></tr>
+                                    <tr class="hover:bg-slate-50"><td class="py-3 px-4">Membrană de adiție / cm2</td><td class="py-3 px-4 font-bold text-right whitespace-nowrap">400 RON</td></tr>
+                                    <tr class="hover:bg-slate-50"><td class="py-3 px-4">Supraproteză pe implanturi</td><td class="py-3 px-4 font-bold text-right whitespace-nowrap">1.800 RON</td></tr>
+                                </tbody></table>
+                            </div>
+                        </div>
+                        <!-- Protetică -->
+                        <div class="price-section hidden" data-cat="Protetică">
+                            <h3 class="text-lg font-bold mb-4 text-slate-900">Protetică</h3>
+                            <div class="bg-white rounded-2xl border border-slate-100 overflow-hidden">
+                                <table class="w-full text-left text-sm"><tbody class="divide-y divide-slate-100">
+                                    <tr class="hover:bg-slate-50"><td class="py-3 px-4">Amprentă protetică</td><td class="py-3 px-4 font-bold text-right whitespace-nowrap">150 RON</td></tr>
+                                    <tr class="hover:bg-slate-50"><td class="py-3 px-4">Amprentă model de studiu per arcadă</td><td class="py-3 px-4 font-bold text-right whitespace-nowrap">100 RON</td></tr>
+                                    <tr class="hover:bg-slate-50"><td class="py-3 px-4">Reconstituire corono-radiculară metalică</td><td class="py-3 px-4 font-bold text-right whitespace-nowrap">350 RON</td></tr>
+                                    <tr class="hover:bg-slate-50"><td class="py-3 px-4">Reconstituire corono-radiculară zirconiu</td><td class="py-3 px-4 font-bold text-right whitespace-nowrap">550 RON</td></tr>
+                                    <tr class="hover:bg-slate-50"><td class="py-3 px-4">Pivot fibră de sticlă</td><td class="py-3 px-4 font-bold text-right whitespace-nowrap">250 RON</td></tr>
+                                    <tr class="hover:bg-slate-50"><td class="py-3 px-4">Coroană acrilică provizorie (laborator)</td><td class="py-3 px-4 font-bold text-right whitespace-nowrap">300 RON</td></tr>
+                                    <tr class="hover:bg-slate-50"><td class="py-3 px-4">Coroană acrilică provizorie (cabinet)</td><td class="py-3 px-4 font-bold text-right whitespace-nowrap">200 RON</td></tr>
+                                    <tr class="hover:bg-slate-50"><td class="py-3 px-4">Coroană metalică</td><td class="py-3 px-4 font-bold text-right whitespace-nowrap">500 RON</td></tr>
+                                    <tr class="hover:bg-slate-50"><td class="py-3 px-4">Coroană metalo-ceramică</td><td class="py-3 px-4 font-bold text-right whitespace-nowrap">850 RON</td></tr>
+                                    <tr class="hover:bg-slate-50"><td class="py-3 px-4">Coroană Zirconiu stratificat</td><td class="py-3 px-4 font-bold text-right whitespace-nowrap">1.350 RON</td></tr>
+                                    <tr class="hover:bg-slate-50"><td class="py-3 px-4">Probă capă metal/zirconiu</td><td class="py-3 px-4 font-bold text-right whitespace-nowrap">50 RON</td></tr>
+                                    <tr class="hover:bg-slate-50"><td class="py-3 px-4">Coroană integral ceramică E-Max</td><td class="py-3 px-4 font-bold text-right whitespace-nowrap">2.000 RON</td></tr>
+                                    <tr class="hover:bg-slate-50"><td class="py-3 px-4">Coroană pe implant (zirconiu)</td><td class="py-3 px-4 font-bold text-right whitespace-nowrap">1.650 RON</td></tr>
+                                    <tr class="hover:bg-slate-50"><td class="py-3 px-4">Coroană pe implant (metalo-ceramică)</td><td class="py-3 px-4 font-bold text-right whitespace-nowrap">1.250 RON</td></tr>
+                                    <tr class="hover:bg-slate-50"><td class="py-3 px-4">Cimentare provizorie per element</td><td class="py-3 px-4 font-bold text-right whitespace-nowrap">20 RON</td></tr>
+                                    <tr class="hover:bg-slate-50"><td class="py-3 px-4">Cimentare definitivă per element</td><td class="py-3 px-4 font-bold text-right whitespace-nowrap">50 RON</td></tr>
+                                    <tr class="hover:bg-slate-50"><td class="py-3 px-4">Ablație coroană per element</td><td class="py-3 px-4 font-bold text-right whitespace-nowrap">100 RON</td></tr>
+                                    <tr class="hover:bg-slate-50"><td class="py-3 px-4">Reparație coroană ceramică</td><td class="py-3 px-4 font-bold text-right whitespace-nowrap">200 RON</td></tr>
+                                    <tr class="hover:bg-slate-50"><td class="py-3 px-4">Refacere bont cu glassionomer</td><td class="py-3 px-4 font-bold text-right whitespace-nowrap">150 RON</td></tr>
+                                    <tr class="hover:bg-slate-50"><td class="py-3 px-4">Refacere bont cu pivot fibră de sticlă</td><td class="py-3 px-4 font-bold text-right whitespace-nowrap">400 RON</td></tr>
+                                    <tr class="hover:bg-slate-50"><td class="py-3 px-4">Echilibrare ocluzală</td><td class="py-3 px-4 font-bold text-right whitespace-nowrap">150 RON</td></tr>
+                                    <tr class="hover:bg-slate-50"><td class="py-3 px-4">Fațetă ceramică E-Max</td><td class="py-3 px-4 font-bold text-right whitespace-nowrap">2.200 RON</td></tr>
+                                    <tr class="hover:bg-slate-50"><td class="py-3 px-4">Înălțare de ocluzie</td><td class="py-3 px-4 font-bold text-right whitespace-nowrap">100 RON</td></tr>
+                                    <tr class="hover:bg-slate-50"><td class="py-3 px-4">Ablație pivot</td><td class="py-3 px-4 font-bold text-right whitespace-nowrap">150 RON</td></tr>
+                                    <tr class="hover:bg-slate-50"><td class="py-3 px-4">Proteză parțială acrilică 4-6 dinți</td><td class="py-3 px-4 font-bold text-right whitespace-nowrap">2.250 RON</td></tr>
+                                    <tr class="hover:bg-slate-50"><td class="py-3 px-4">Proteză totală acrilică</td><td class="py-3 px-4 font-bold text-right whitespace-nowrap">2.400 RON</td></tr>
+                                    <tr class="hover:bg-slate-50"><td class="py-3 px-4">Proteză acrilică specială</td><td class="py-3 px-4 font-bold text-right whitespace-nowrap">3.600 RON</td></tr>
+                                    <tr class="hover:bg-slate-50"><td class="py-3 px-4">Reparație proteză</td><td class="py-3 px-4 font-bold text-right whitespace-nowrap">550 RON</td></tr>
+                                    <tr class="hover:bg-slate-50"><td class="py-3 px-4">Căptușire proteză</td><td class="py-3 px-4 font-bold text-right whitespace-nowrap">450 RON</td></tr>
+                                    <tr class="hover:bg-slate-50"><td class="py-3 px-4">Proteză scheletată clasică</td><td class="py-3 px-4 font-bold text-right whitespace-nowrap">4.200 RON</td></tr>
+                                    <tr class="hover:bg-slate-50"><td class="py-3 px-4">Proteză scheletată unilaterală</td><td class="py-3 px-4 font-bold text-right whitespace-nowrap">2.700 RON</td></tr>
+                                    <tr class="hover:bg-slate-50"><td class="py-3 px-4">Proteză Kemeny</td><td class="py-3 px-4 font-bold text-right whitespace-nowrap">500 RON</td></tr>
+                                </tbody></table>
+                            </div>
+                        </div>
+                        <!-- Parodontologie -->
+                        <div class="price-section hidden" data-cat="Parodontologie">
+                            <h3 class="text-lg font-bold mb-4 text-slate-900">Parodontologie</h3>
+                            <div class="bg-white rounded-2xl border border-slate-100 overflow-hidden">
+                                <table class="w-full text-left text-sm"><tbody class="divide-y divide-slate-100">
+                                    <tr class="hover:bg-slate-50"><td class="py-3 px-4">Consultație primară MS Parodontologie</td><td class="py-3 px-4 font-bold text-right whitespace-nowrap">150 RON</td></tr>
+                                    <tr class="hover:bg-slate-50"><td class="py-3 px-4">Consultație MS Parodontologie (include parodontometrie)</td><td class="py-3 px-4 font-bold text-right whitespace-nowrap">200 RON</td></tr>
+                                    <tr class="hover:bg-slate-50"><td class="py-3 px-4">Consultație MS Parodontologie (include detartraj, periaj profesional, AirFlow)</td><td class="py-3 px-4 font-bold text-right whitespace-nowrap">400 RON</td></tr>
+                                    <tr class="hover:bg-slate-50"><td class="py-3 px-4">Parodontometrie în cadrul dispensarizării</td><td class="py-3 px-4 font-bold text-right whitespace-nowrap">100 RON</td></tr>
+                                    <tr class="hover:bg-slate-50"><td class="py-3 px-4">Detartraj manual per dinte</td><td class="py-3 px-4 font-bold text-right whitespace-nowrap">15 RON</td></tr>
+                                    <tr class="hover:bg-slate-50"><td class="py-3 px-4">Detartraj ultrasunete, periaj profesional, AirFlow (o arcadă)</td><td class="py-3 px-4 font-bold text-right whitespace-nowrap">280 RON</td></tr>
+                                    <tr class="hover:bg-slate-50"><td class="py-3 px-4">Detartraj ultrasunete, periaj profesional, AirFlow (ambele arcade)</td><td class="py-3 px-4 font-bold text-right whitespace-nowrap">480 RON</td></tr>
+                                    <tr class="hover:bg-slate-50"><td class="py-3 px-4">Periaj profesional per arcadă</td><td class="py-3 px-4 font-bold text-right whitespace-nowrap">100 RON</td></tr>
+                                    <tr class="hover:bg-slate-50"><td class="py-3 px-4">Prophy Jet / AirFlow (soluție bicarbonat) per arcadă</td><td class="py-3 px-4 font-bold text-right whitespace-nowrap">100 RON</td></tr>
+                                    <tr class="hover:bg-slate-50"><td class="py-3 px-4">Fluorizare cu lac per dinte</td><td class="py-3 px-4 font-bold text-right whitespace-nowrap">20 RON</td></tr>
+                                    <tr class="hover:bg-slate-50"><td class="py-3 px-4">Fluorizare cu gel per arcadă</td><td class="py-3 px-4 font-bold text-right whitespace-nowrap">50 RON</td></tr>
+                                    <tr class="hover:bg-slate-50"><td class="py-3 px-4">Tratamentul gingivo-stomatitelor per ședință</td><td class="py-3 px-4 font-bold text-right whitespace-nowrap">30 RON</td></tr>
+                                    <tr class="hover:bg-slate-50"><td class="py-3 px-4">Tratamentul aftelor bucale per ședință</td><td class="py-3 px-4 font-bold text-right whitespace-nowrap">20 RON</td></tr>
+                                    <tr class="hover:bg-slate-50"><td class="py-3 px-4">Tratamentul abcesului parodontal (incizie și drenaj)</td><td class="py-3 px-4 font-bold text-right whitespace-nowrap">70 RON</td></tr>
+                                    <tr class="hover:bg-slate-50"><td class="py-3 px-4">Chiuretaj subgingival în câmp închis per dinte</td><td class="py-3 px-4 font-bold text-right whitespace-nowrap">50 RON</td></tr>
+                                    <tr class="hover:bg-slate-50"><td class="py-3 px-4">Chiuretaj subgingival în câmp deschis (cu lambou) per dinte/rădăcină</td><td class="py-3 px-4 font-bold text-right whitespace-nowrap">200 RON</td></tr>
+                                    <tr class="hover:bg-slate-50"><td class="py-3 px-4">Remodelare gingivală (alungire coronară) / dinte</td><td class="py-3 px-4 font-bold text-right whitespace-nowrap">250 RON</td></tr>
+                                    <tr class="hover:bg-slate-50"><td class="py-3 px-4">Gingivoalveoloplastie (în scopul alungirii coronare) / dinte</td><td class="py-3 px-4 font-bold text-right whitespace-nowrap">400 RON</td></tr>
+                                    <tr class="hover:bg-slate-50"><td class="py-3 px-4">Augmentare gingivală (grefă de țesut conjunctiv sau epitelio-conjunctivă) / dinte</td><td class="py-3 px-4 font-bold text-right whitespace-nowrap">1.000 RON</td></tr>
+                                    <tr class="hover:bg-slate-50"><td class="py-3 px-4">Intervenție chirurgicală cu materiale de adiție osoasă pentru regenerare parodontală / dinte</td><td class="py-3 px-4 font-bold text-right whitespace-nowrap">600 RON</td></tr>
+                                    <tr class="hover:bg-slate-50"><td class="py-3 px-4">Intervenție chirurgicală cu lambou pentru amputație radiculară sau premolarizare / dinte</td><td class="py-3 px-4 font-bold text-right whitespace-nowrap">350 RON</td></tr>
+                                    <tr class="hover:bg-slate-50"><td class="py-3 px-4">Imobilizare cu bandă din fibră de sticlă (canin - canin)</td><td class="py-3 px-4 font-bold text-right whitespace-nowrap">400 RON</td></tr>
+                                </tbody></table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // --- Mobile Menu ---
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            const icon = document.getElementById('menuIcon');
+            if (menu.classList.contains('translate-x-full')) {
+                menu.classList.remove('translate-x-full');
+                icon.classList.remove('fa-bars'); icon.classList.add('fa-xmark');
+                document.body.style.overflow = 'hidden';
+            } else {
+                menu.classList.add('translate-x-full');
+                icon.classList.add('fa-bars'); icon.classList.remove('fa-xmark');
+                document.body.style.overflow = '';
+            }
+        }
+
+        // --- Pricing Modal & Search ---
+        function togglePricingModal() {
+            const modal = document.getElementById('pricing-modal');
+            modal.classList.toggle('hidden');
+            if(!modal.classList.contains('hidden')) document.body.style.overflow = 'hidden';
+            else document.body.style.overflow = '';
+        }
+        function filterPrices(category) {
+            const buttons = document.querySelectorAll('.cat-btn');
+            buttons.forEach(btn => {
+                btn.classList.remove('bg-white', 'shadow-sm', 'text-blue-600', 'ring-1', 'ring-blue-100');
+                btn.classList.add('text-slate-600');
+                if(btn.innerText.includes(category)) {
+                    btn.classList.add('bg-white', 'shadow-sm', 'text-blue-600', 'ring-1', 'ring-blue-100');
+                    btn.classList.remove('text-slate-600');
+                }
+            });
+            const sections = document.querySelectorAll('.price-section');
+            sections.forEach(sec => {
+                if(sec.getAttribute('data-cat') === category) sec.classList.remove('hidden');
+                else sec.classList.add('hidden');
+            });
+            document.getElementById('priceSearch').value = '';
+            searchTable();
+        }
+        function searchTable() {
+            const input = document.getElementById('priceSearch');
+            const filter = input.value.toUpperCase();
+            const sections = document.querySelectorAll('.price-section');
+            sections.forEach(section => {
+                const rows = section.getElementsByTagName('tr');
+                let hasVisibleRows = false;
+                for (let i = 0; i < rows.length; i++) {
+                    const td = rows[i].getElementsByTagName("td")[0];
+                    if (td && td.textContent.toUpperCase().indexOf(filter) > -1) {
+                        rows[i].style.display = ""; hasVisibleRows = true;
+                    } else rows[i].style.display = "none";
+                }
+                if(filter.length > 0) {
+                     if(hasVisibleRows) section.classList.remove('hidden'); else section.classList.add('hidden');
+                } else {
+                     const activeBtn = document.querySelector('.cat-btn.text-blue-600');
+                     if(activeBtn && section.getAttribute('data-cat') === activeBtn.innerText.trim()) section.classList.remove('hidden');
+                     else section.classList.add('hidden');
+                }
+            });
+        }
+        
+        function toggleContactMap(show) {
+            const flip = document.getElementById('contactFlip');
+            if(show) flip.classList.add('is-flipped');
+            else flip.classList.remove('is-flipped');
+        }
+
+        // --- Snap Dots ---
+        function initSnapDots(sliderId, dotsId) {
+            const slider = document.getElementById(sliderId);
+            const dotsWrap = document.getElementById(dotsId);
+            if(!slider || !dotsWrap) return;
+            const cards = Array.from(slider.children).filter(el => el.tagName === 'DIV');
+            if(cards.length <= 1) return;
+            dotsWrap.innerHTML = '';
+            const dots = cards.map((_, i) => {
+                const btn = document.createElement('button');
+                btn.className = 'w-2 h-2 rounded-full bg-slate-300 transition-all';
+                btn.onclick = () => slider.scrollTo({ left: cards[i].offsetLeft - (slider.clientWidth - cards[i].offsetWidth)/2, behavior: 'smooth' });
+                dotsWrap.appendChild(btn);
+                return btn;
+            });
+            slider.addEventListener('scroll', () => {
+                const center = slider.scrollLeft + slider.clientWidth / 2;
+                let activeIdx = 0; let minDst = Infinity;
+                cards.forEach((c, i) => {
+                    const d = Math.abs((c.offsetLeft + c.offsetWidth/2) - center);
+                    if(d < minDst) { minDst = d; activeIdx = i; }
+                });
+                dots.forEach((d, i) => d.className = (i === activeIdx) ? 'w-6 h-2 rounded-full bg-slate-900 transition-all' : 'w-2 h-2 rounded-full bg-slate-300 transition-all');
+            }, { passive: true });
+        }
+
+        // --- Number Animation ---
+        function animateStats() {
+            const stats = document.querySelectorAll('.count-up');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const target = parseInt(entry.target.getAttribute('data-target'));
+                        let count = 0;
+                        const duration = 2000; // 2 seconds
+                        const increment = target / (duration / 16); // 60fps
+                        
+                        const timer = setInterval(() => {
+                            count += increment;
+                            if (count >= target) {
+                                count = target;
+                                clearInterval(timer);
+                            }
+                            entry.target.innerText = Math.floor(count);
+                        }, 16);
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.5 });
+            
+            stats.forEach(stat => observer.observe(stat));
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            initSnapDots('services-grid', 'services-dots');
+            initSnapDots('team-slider', 'team-dots');
+            animateStats();
+        });
+    </script>
+
+    <!-- WhatsApp Floating Button -->
+    <a 
+        href="https://wa.me/40720088880" 
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label="Chat on WhatsApp"
+        class="fixed bottom-6 right-6 z-50 flex items-center justify-center w-14 h-14 bg-[#25D366] text-white rounded-full shadow-2xl hover:bg-[#20bd5a] hover:scale-110 transition-all duration-300"
+    >
+        <svg viewBox="0 0 24 24" fill="currentColor" class="w-8 h-8">
+            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
+        </svg>
+    </a>
+</body>
+</html>
